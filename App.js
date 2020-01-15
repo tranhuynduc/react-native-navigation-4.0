@@ -1,64 +1,94 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import HomeScreen from './Containers/HomeScreen';
-import ProfileScreen from './Containers/ProfileScreen';
-import AboutScreen from './Containers/AboutScreen';
-import DetailScreen from './Containers/DetailScreen';
+import MainScreen from './Containers/MainScreen';
+import ListScreen from './Containers/ListScreen';
+import LoginScreen from './Containers/LoginScreen';
+import StatisticScreen from './Containers/StatisticScreen';
+import NoteDetailScreen from './Containers/NoteDetailScreen';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
-const AppNavigator = createStackNavigator(
+const AppStack = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
+    Main: {
+      screen: MainScreen,
     },
-    Profile: {
-      screen: ProfileScreen,
+    NoteDetail: {
+      screen: NoteDetailScreen,
     },
   },
   {
-    defaultNavigationOptions: {
+    defaultNavigationOptions: ({ navigation }) => ({
+      initialRouteName: 'Login',
       title: 'Home',
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
+      headerTitleAlign: 'center',
+      headerLeft: () => (
+        <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+      ),
+    }),
   },
 );
 
-const TabNavigattor = createBottomTabNavigator({
-  Home: {
-    screen: AppNavigator,
+const AuthStack = createStackNavigator({ Login: LoginScreen });
+const StatisticStack = createStackNavigator(
+  { Statistic: StatisticScreen },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerLeft: () => (
+        <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+      ),
+    }),
   },
-  Detail: {
-    screen: DetailScreen,
+);
+const ListStack = createStackNavigator(
+  { List: ListScreen },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerLeft: () => (
+        <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+      ),
+    }),
   },
-});
+);
 
-const DrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: TabNavigattor,
+const DrawerNavigator = createDrawerNavigator(
+  {
+    Create: {
+      screen: AppStack,
+    },
+    Statistic: {
+      screen: StatisticStack,
+    },
+    List: {
+      screen: ListStack,
+    },
   },
-  About: {
-    screen: AboutScreen,
+  {
+    initialRouteName: 'Statistic',
   },
-});
+);
+const swithcNavigation = createSwitchNavigator(
+  {
+    App: DrawerNavigator,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'Auth',
+  },
+);
 
-const RootNavigation = createAppContainer(DrawerNavigator);
+const AppNavigation = createAppContainer(swithcNavigation);
+import { Provider } from 'react-redux';
+import configureStore from './Redux/configureStore';
+const store = configureStore();
 const App = () => {
   return (
-    <View>
-      <Text>This is App</Text>
-      <RootNavigation />
-    </View>
+    <Provider store={store}>
+      <AppNavigation />
+    </Provider>
   );
 };
 
-export default createAppContainer(DrawerNavigator);
+export default App;
