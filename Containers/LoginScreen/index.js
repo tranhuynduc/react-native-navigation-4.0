@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
+import {
+  Container,
+  StyledLayout,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  StyledButton,
+  Paragraph,
+} from '../../styled/Layout';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('Admin');
@@ -15,23 +25,35 @@ const LoginScreen = ({ navigation }) => {
       return setError('Please input your password');
     }
 
-    navigation.navigate('App');
+    navigation.navigate('Statistic');
   };
   return (
-    <View>
-      <TextInput
-        placeholder="Input your username"
-        onChangeText={text => setUsername(text)}
-        value={username}
-      />
-      <TextInput
-        placeholder="Input your password"
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <Button title="Login" onPress={() => login()} />
-      {error !== '' && <Text style={{ color: 'red' }}>{error}</Text>}
-    </View>
+    <Container>
+      <FormGroup>
+        <FormLabel>Username</FormLabel>
+        <FormControl
+          placeholder="Input your username"
+          onChangeText={text => setUsername(text)}
+          value={username}
+        />
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Password</FormLabel>
+        <FormControl
+          placeholder="Input your password"
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+      </FormGroup>
+      <StyledButton color="primary" onPress={() => login()}>
+        <Paragraph color="white">Login</Paragraph>
+      </StyledButton>
+      {error !== '' && (
+        <Paragraph color="danger" align="left">
+          {error}
+        </Paragraph>
+      )}
+    </Container>
   );
 };
 

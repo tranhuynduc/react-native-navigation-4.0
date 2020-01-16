@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import { connect } from 'react-redux';
+import { Container } from '../../styled/Layout';
+import { NoteItem } from '../../styled/ListItem';
+
 const ListScreen = ({ notes }) => {
   return (
-    <View>
+    <Container>
       <Text>List Notes</Text>
       {notes.map((item, index) => (
-        <Text key={index}>{item}</Text>
+        <NoteItem key={index}>
+          <Text>{item}</Text>
+        </NoteItem>
       ))}
-    </View>
+    </Container>
   );
 };
 

@@ -2,10 +2,22 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
+import {
+  Container,
+  StyledLayout,
+  StyledButton,
+  Paragraph,
+} from '../../styled/Layout';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 Geocoder.init('AIzaSyCgBFyz0TSOsXmIt49tzif9bnz9DjIW06k');
 
 class MainScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: () => (
+      <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+    ),
+  });
   constructor(props) {
     super(props);
 
@@ -48,17 +60,19 @@ class MainScreen extends Component {
     const { navigation } = this.props;
     const { address } = this.state;
     return (
-      <View>
-        <Text>Current position: </Text>
-        <Text> {this.state.latitude} </Text>
-        <Text> {this.state.longitude} </Text>
-        <Text> {this.state.error} </Text>
-        <Button
-          title="Get address from this location"
-          disabled={address == null}
-          onPress={() => navigation.navigate('NoteDetail', { address })}
-        />
-      </View>
+      <Container>
+        <StyledLayout>
+          <Text>Current position: </Text>
+          <Text> {this.state.latitude} </Text>
+          <Text> {this.state.longitude} </Text>
+          <Text> {this.state.error} </Text>
+          <StyledButton
+            color="primary"
+            onPress={() => navigation.push('NoteDetail', { address })}>
+            <Paragraph>Get address from this </Paragraph>
+          </StyledButton>
+        </StyledLayout>
+      </Container>
     );
   }
 }

@@ -1,7 +1,7 @@
 import { ADD_LOCATION } from './constants';
 
 const initialState = {
-  address: [],
+  address: ['sample note', 'the second note'],
   isError: false,
   count: [],
   count1: [],

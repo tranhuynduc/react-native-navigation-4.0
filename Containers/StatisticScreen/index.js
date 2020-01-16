@@ -1,20 +1,23 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { Container } from '../../styled/Layout';
+import { NoteItem } from '../../styled/ListItem';
 
-const StatisticScreen = ({ notes, add, dispatch }) => {
-  console.log('note', notes);
+const StatisticScreen = ({ notes }) => {
   return (
-    <View>
+    <Container>
       <Text>Statistic Screen</Text>
       <Text>Number of note: {notes.length}</Text>
       {notes.length > 0 && (
         <View>
           <Text>Latest note</Text>
-          <Text>{notes[notes.length - 1]}</Text>
+          <NoteItem>
+            <Text>{notes[notes.length - 1]}</Text>
+          </NoteItem>
         </View>
       )}
-    </View>
+    </Container>
   );
 };
 
