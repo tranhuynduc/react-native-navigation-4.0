@@ -1,14 +1,21 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Paragraph } from '../../styled/Layout';
+import { Paragraph, FlexItem } from '../../styled/Layout';
+import styled from 'styled-components';
 
+const NoteWrapper = styled(View)`
+  border-bottom-color: white;
+  border-bottom-width: 1px;
+  padding-bottom: 6px;
+  margin-vertical: 12px;
+`;
 const NoteItem = ({ note }) => {
   return (
-    <View>
-      {note.split(',').map((data, index) => {
-        return <Paragraph key={index}>{data}</Paragraph>;
-      })}
-    </View>
+    <NoteWrapper>
+        {note.address.split(',').map((data, index) => {
+          return <Paragraph key={index}>{data.trim()}</Paragraph>;
+        })}
+    </NoteWrapper>
   );
 };
 

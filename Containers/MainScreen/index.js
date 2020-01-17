@@ -102,7 +102,9 @@ class MainScreen extends Component {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Paragraph color="#000">Loading</Paragraph>
+        <FlexItem>
+          <Paragraph color="#000">Loading</Paragraph>
+        </FlexItem>
       </View>
     );
   };

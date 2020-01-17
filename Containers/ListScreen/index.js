@@ -18,9 +18,8 @@ const ListScreen = ({ notes }) => {
       <SafeAreaView>
         <FlatList
           data={notes}
-          renderItem={item => {
-            console.log(item);
-            return <NoteItem note={item} />;
+          renderItem={dataRow => {
+            return <NoteItem note={dataRow.item} />;
           }}
           keyExtractor={item => item.id}
         />

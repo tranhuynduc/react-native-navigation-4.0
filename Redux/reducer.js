@@ -4,11 +4,11 @@ const initialState = {
   notes: [
     {
       id: 1,
-      address: 'sample note',
+      address: '259 Trần Hưng Đạo, Quận 1, Hồ Chí Minh; Ho Chi Minh City',
     },
     {
       id: 0,
-      address: 'the second note',
+      address: '204 - 206 Trần Hưng Đạo, P. Nguyễn Cư Trinh, Quận 1, TP. HCM',
     },
   ],
   isError: false,

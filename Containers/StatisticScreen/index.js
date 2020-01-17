@@ -1,28 +1,28 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Paragraph } from '../../styled/Layout';
+import { Container, Paragraph, FlexItem } from '../../styled/Layout';
 import NoteItem from '../Note';
 
 const StatisticScreen = ({ notes }) => {
-  const latestNote = notes[notes.length - 1].address;
+  const latestNote = notes[notes.length - 1];
   console.log('notes', latestNote);
   return (
     <Container>
-      <Paragraph size={32} bold>
-        Number of note:{' '}
-        <Paragraph size={32} color={'orange'}>
-          {' '}
-          {notes.length}
+        <Paragraph size={32} bold>
+          Number of note:{' '}
+          <Paragraph size={32} color={'orange'}>
+            {' '}
+            {notes.length}
+          </Paragraph>
         </Paragraph>
-      </Paragraph>
       {notes.length > 0 && (
-        <View>
+        <FlexItem>
           <Paragraph size={22} underline gap={12}>
             Latest note:
           </Paragraph>
           <NoteItem note={latestNote} />
-        </View>
+        </FlexItem>
       )}
     </Container>
   );
