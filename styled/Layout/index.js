@@ -5,3 +5,4 @@ export { default as FormControl } from './FormControl';
 export { default as FormLabel } from './FormLabel';
 export { default as FormGroup } from './FormGroup';
 export { default as Paragraph } from './Paragraph';
+export { default as FlexItem } from './FlexItem';

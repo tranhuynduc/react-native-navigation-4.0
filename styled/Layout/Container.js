@@ -2,12 +2,17 @@ import styled from 'styled-components';
 
 const Container = styled.View`
   width: 100%;
-  padding-top: 15px;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 15px;
   margin-right: auto;
   margin-left: auto;
+  background: #333;
   flex: 1;
+
+  ${({ gap }) =>
+    gap &&
+    `
+    paddingVertical: ${gap}px
+ `}
 `;
 
 export default Container;

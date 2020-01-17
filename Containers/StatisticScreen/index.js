@@ -1,20 +1,27 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Container } from '../../styled/Layout';
-import { NoteItem } from '../../styled/ListItem';
+import { Container, Paragraph } from '../../styled/Layout';
+import NoteItem from '../Note';
 
 const StatisticScreen = ({ notes }) => {
+  const latestNote = notes[notes.length - 1].address;
+  console.log('notes', latestNote);
   return (
     <Container>
-      <Text>Statistic Screen</Text>
-      <Text>Number of note: {notes.length}</Text>
+      <Paragraph size={32} bold>
+        Number of note:{' '}
+        <Paragraph size={32} color={'orange'}>
+          {' '}
+          {notes.length}
+        </Paragraph>
+      </Paragraph>
       {notes.length > 0 && (
         <View>
-          <Text>Latest note</Text>
-          <NoteItem>
-            <Text>{notes[notes.length - 1]}</Text>
-          </NoteItem>
+          <Paragraph size={22} underline gap={12}>
+            Latest note:
+          </Paragraph>
+          <NoteItem note={latestNote} />
         </View>
       )}
     </Container>
@@ -22,7 +29,7 @@ const StatisticScreen = ({ notes }) => {
 };
 
 const mapStateToProps = state => ({
-  notes: state.map.address,
+  notes: state.map.notes,
 });
 
 export default connect(mapStateToProps, null)(StatisticScreen);

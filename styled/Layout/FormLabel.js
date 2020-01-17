@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import Paragraph from './Paragraph';
 
-const FormLabel = styled.Text`
+const FormLabel = styled(Paragraph)`
   margin-bottom: 8px;
 `;
 

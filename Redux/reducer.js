@@ -1,7 +1,16 @@
 import { ADD_LOCATION } from './constants';
 
 const initialState = {
-  address: ['sample note', 'the second note'],
+  notes: [
+    {
+      id: 1,
+      address: 'sample note',
+    },
+    {
+      id: 0,
+      address: 'the second note',
+    },
+  ],
   isError: false,
   count: [],
   count1: [],
@@ -12,18 +21,14 @@ function mainReducer(state = initialState, action) {
     case ADD_LOCATION:
       const newState = {
         ...state,
-        address: state.address.concat([action.payload]),
+        notes: state.notes.concat([
+          {
+            id: state.notes.length,
+            address: action.payload,
+          },
+        ]),
       };
-      console.log('newState', newState);
-
       return newState;
-    case 'ADD':
-      console.log(state);
-      return {
-        ...state,
-        count: state.count.concat([1]),
-        count1: state.count.push(1),
-      };
     default:
       return state;
   }

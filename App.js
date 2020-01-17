@@ -22,11 +22,6 @@ const AppStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => ({
       initialRouteName: 'Login',
-      title: 'Home',
-      headerTitleAlign: 'center',
-      headerLeftContainerStyle: {
-        paddingLeft: 15,
-      },
     }),
   },
 );
@@ -37,11 +32,13 @@ const StatisticStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => ({
       headerLeft: () => (
-        <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+        <Icon
+          style={{ paddingLeft: 15 }}
+          name="menu"
+          size={30}
+          onPress={() => navigation.openDrawer()}
+        />
       ),
-      headerLeftContainerStyle: {
-        paddingLeft: 15,
-      },
     }),
   },
 );
@@ -50,11 +47,13 @@ const ListStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => ({
       headerLeft: () => (
-        <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+        <Icon
+          style={{ paddingLeft: 15 }}
+          name="menu"
+          size={30}
+          onPress={() => navigation.openDrawer()}
+        />
       ),
-      headerLeftContainerStyle: {
-        paddingLeft: 15,
-      },
     }),
   },
 );

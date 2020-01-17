@@ -6,8 +6,9 @@ const FormControl = styled.TextInput`
   padding: 6px 12px;
   font-weight: 400;
   color: #495057;
-  background-color: #fff;
-  border: 1px solid #ced4da;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid white;
+  border-radius: 5px;
 `;
 
 export default FormControl;

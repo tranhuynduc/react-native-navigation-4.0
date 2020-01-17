@@ -1,22 +1,34 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
-import { Container } from '../../styled/Layout';
-import { NoteItem } from '../../styled/ListItem';
+import { Container, Paragraph } from '../../styled/Layout';
+import { FlatList } from 'react-native-gesture-handler';
+import NoteItem from '../Note';
 
 const ListScreen = ({ notes }) => {
+  console.log(notes);
   return (
     <Container>
-      <Text>List Notes</Text>
-      {notes.map((item, index) => (
-        <NoteItem key={index}>
-          <Text>{item}</Text>
-        </NoteItem>
-      ))}
+      <Paragraph size={24}>List Notes</Paragraph>
+      {/* <FlatList
+        data={notes}
+        rederItem={rowData => <NoteItem note={rowData} />}
+        keyExtractor={item => item.id}
+      /> */}
+      <SafeAreaView>
+        <FlatList
+          data={notes}
+          renderItem={item => {
+            console.log(item);
+            return <NoteItem note={item} />;
+          }}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
     </Container>
   );
 };
 
 export default connect(state => ({
-  notes: state.map.address,
+  notes: state.map.notes,
 }))(ListScreen);

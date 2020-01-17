@@ -7,15 +7,23 @@ import {
   StyledLayout,
   StyledButton,
   Paragraph,
+  FlexItem,
 } from '../../styled/Layout';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps';
 
 Geocoder.init('AIzaSyCgBFyz0TSOsXmIt49tzif9bnz9DjIW06k');
 
 class MainScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: () => (
-      <Icon name="menu" size={30} onPress={() => navigation.openDrawer()} />
+      <Icon
+        style={{ paddingLeft: 15 }}
+        name="menu"
+        size={30}
+        onPress={() => navigation.openDrawer()}
+      />
     ),
   });
   constructor(props) {
@@ -26,6 +34,7 @@ class MainScreen extends Component {
       longitude: null,
       error: null,
       address: null,
+      marker: null,
     };
   }
 
@@ -44,8 +53,14 @@ class MainScreen extends Component {
         })
           .then(json => {
             const address = json.results[0].formatted_address;
-            console.log('json', address);
             this.setState({
+              marker: {
+                latlng: {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                },
+                title: address,
+              },
               address,
             });
           })
@@ -56,22 +71,58 @@ class MainScreen extends Component {
     );
   }
 
+  renderMap = () => {
+    const { marker } = this.state;
+
+    if (marker != null) {
+      return (
+        <MapView
+          style={{ height: '100%' }}
+          initialRegion={{
+            latitude: marker.latlng.lat,
+            longitude: marker.latlng.lng,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}>
+          <Marker
+            coordinate={{
+              latitude: marker.latlng.lat,
+              longitude: marker.latlng.lng,
+            }}
+            title={marker.title}
+          />
+        </MapView>
+      );
+    }
+
+    return (
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Paragraph color="#000">Loading</Paragraph>
+      </View>
+    );
+  };
+
   render() {
     const { navigation } = this.props;
-    const { address } = this.state;
+    const { address, marker } = this.state;
     return (
-      <Container>
-        <StyledLayout>
-          <Text>Current position: </Text>
-          <Text> {this.state.latitude} </Text>
-          <Text> {this.state.longitude} </Text>
-          <Text> {this.state.error} </Text>
-          <StyledButton
-            color="primary"
-            onPress={() => navigation.push('NoteDetail', { address })}>
-            <Paragraph>Get address from this </Paragraph>
-          </StyledButton>
-        </StyledLayout>
+      <Container style={{ flex: 1 }}>
+        <FlexItem>
+          <FlexItem background="#ccc">{this.renderMap()}</FlexItem>
+          <View style={{ flex: 0, marginVertical: 12 }}>
+            <StyledButton
+              color="primary"
+              disabled={address == null}
+              onPress={() => navigation.push('NoteDetail', { address })}>
+              <Paragraph align="center">Next </Paragraph>
+            </StyledButton>
+          </View>
+        </FlexItem>
       </Container>
     );
   }

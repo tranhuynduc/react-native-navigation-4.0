@@ -8,6 +8,7 @@ import {
   FormLabel,
   StyledButton,
   Paragraph,
+  FlexItem,
 } from '../../styled/Layout';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -28,31 +29,35 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('Statistic');
   };
   return (
-    <Container>
-      <FormGroup>
-        <FormLabel>Username</FormLabel>
-        <FormControl
-          placeholder="Input your username"
-          onChangeText={text => setUsername(text)}
-          value={username}
-        />
-      </FormGroup>
-      <FormGroup>
-        <FormLabel>Password</FormLabel>
-        <FormControl
-          placeholder="Input your password"
-          onChangeText={text => setPassword(text)}
-          value={password}
-        />
-      </FormGroup>
-      <StyledButton color="primary" onPress={() => login()}>
-        <Paragraph color="white">Login</Paragraph>
-      </StyledButton>
-      {error !== '' && (
-        <Paragraph color="danger" align="left">
-          {error}
-        </Paragraph>
-      )}
+    <Container gap={15}>
+      <FlexItem>
+        <FormGroup>
+          <FormLabel>Username</FormLabel>
+          <FormControl
+            placeholder="Input your username"
+            onChangeText={text => setUsername(text)}
+            value={username}
+          />
+        </FormGroup>
+        <FormGroup>
+          <FormLabel>Password</FormLabel>
+          <FormControl
+            placeholder="Input your password"
+            onChangeText={text => setPassword(text)}
+            value={password}
+          />
+        </FormGroup>
+        {error !== '' && (
+          <Paragraph color="danger" align="left">
+            {error}
+          </Paragraph>
+        )}
+      </FlexItem>
+        <StyledButton color="primary" onPress={() => login()}>
+          <Paragraph align={'center'} color="white">
+            Login
+          </Paragraph>
+        </StyledButton>
     </Container>
   );
 };
