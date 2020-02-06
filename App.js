@@ -11,10 +11,9 @@ Geocoder.init('AIzaSyCgBFyz0TSOsXmIt49tzif9bnz9DjIW06k');
 const App = () => {
   return (
     <Provider store={store()}>
-    <PaperProvider>
-
-      <AppNavigation />
-    </PaperProvider>
+      <PaperProvider>
+        <AppNavigation />
+      </PaperProvider>
     </Provider>
   );
 };

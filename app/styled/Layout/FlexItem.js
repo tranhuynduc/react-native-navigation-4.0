@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { View } from 'react-native';
 
-const FlexItem = styled.View`
+const FlexItem = styled(View)`
   flex: 1;
 
   ${({ flex }) =>
@@ -14,8 +15,6 @@ const FlexItem = styled.View`
     `
     background-color: ${background}
  `}
-
-
 `;
 
 export default FlexItem;

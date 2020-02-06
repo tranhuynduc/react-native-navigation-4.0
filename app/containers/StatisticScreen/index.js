@@ -1,17 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Spacing } from '../../styled/Layout';
-import {
-  Button,
-  Text,
-  Card,
-  Title,
-  Subheading,
-  Paragraph,
-  TextInput,
-} from 'react-native-paper';
-import NoteItem from '../../components/NoteItem';
-const StatisticScreen = ({ notes, state, navigation }) => {
+import { Button, Text, Card, Title } from 'react-native-paper';
+
+export const StatisticScreen = ({ notes, navigation }) => {
   if (!notes.length) {
     return (
       <Card style={{ flex: 1 }}>
@@ -43,9 +35,7 @@ const StatisticScreen = ({ notes, state, navigation }) => {
         </Card.Content>
         <Card.Actions>
           <Button
-            onPress={() =>
-              navigation.push('NoteItem', { note: latestNote })
-            }>
+            onPress={() => navigation.push('NoteItem', { note: latestNote })}>
             View Detail
           </Button>
         </Card.Actions>
@@ -56,7 +46,6 @@ const StatisticScreen = ({ notes, state, navigation }) => {
 
 const mapStateToProps = state => ({
   notes: state.notes,
-  state: state,
 });
 
 export default connect(mapStateToProps, null)(StatisticScreen);

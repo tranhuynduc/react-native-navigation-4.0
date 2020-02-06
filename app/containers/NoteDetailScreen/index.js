@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { addNote } from '../../actions/actions';
 import Geocoder from 'react-native-geocoding';
@@ -9,21 +9,10 @@ import {
   Card,
   Title,
   Subheading,
-  Paragraph,
   TextInput,
 } from 'react-native-paper';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Spacing } from '../../styled/Layout';
 import ImagePicker from 'react-native-image-picker';
-
-const options = {
-  title: 'Select Avatar',
-  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-};
 
 const NoteDetailScreen = ({ navigation, dispatch }) => {
   const location = navigation.getParam('location');
@@ -107,7 +96,7 @@ const NoteDetailScreen = ({ navigation, dispatch }) => {
           <Spacing />
 
           <Card.Cover source={image} />
-          <Spacing gap={20}/>
+          <Spacing gap={20} />
 
           <Button icon="note" mode="contained" onPress={() => createNote()}>
             Create New Note

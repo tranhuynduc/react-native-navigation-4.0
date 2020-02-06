@@ -1,27 +1,14 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import NoteItem from '../../components/NoteItem';
+import { SafeAreaView, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  Button,
-  Text,
-  Card,
-  Title,
-  Subheading,
-  Paragraph,
-  TextInput,
-  List,
-  Colors,
-} from 'react-native-paper';
+import { Card, Title, List, Colors } from 'react-native-paper';
 import { Spacing } from '../../styled/Layout';
-const ListScreen = ({ notes, navigation }) => {
+export const ListScreen = ({ notes, navigation }) => {
   console.log(notes);
   return (
     <Card style={{ flex: 1 }}>
       <Card.Content>
         <Title>List Notes</Title>
-
         <SafeAreaView>
           <FlatList
             data={notes}
