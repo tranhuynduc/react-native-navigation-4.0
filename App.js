@@ -6,8 +6,6 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import store from './app/store/configureStore';
 import Geocoder from 'react-native-geocoding';
 
-Geocoder.init('AIzaSyCgBFyz0TSOsXmIt49tzif9bnz9DjIW06k');
-
 const App = () => {
   return (
     <Provider store={store()}>

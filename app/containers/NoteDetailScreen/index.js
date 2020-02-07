@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addNote } from '../../actions/actions';
-import Geocoder from 'react-native-geocoding';
 import DismissKeyboard from '../../components/DismissKeyboard';
 import {
   Button,
@@ -14,42 +13,59 @@ import {
 import { Spacing } from '../../styled/Layout';
 import ImagePicker from 'react-native-image-picker';
 
-const NoteDetailScreen = ({ navigation, dispatch }) => {
-  const location = navigation.getParam('location');
-  const [address, setAddress] = useState(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
-  Geocoder.from({
-    lat: location.latitude,
-    lng: location.longitude,
-  })
-    .then(json => {
-      console.log('get location success');
+import Geocoder from 'react-native-geocoding';
+export class NoteDetailScreen extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      address: null,
+      title: '',
+      description: '',
+      image: null,
+      message: '',
+    };
+  }
 
-      setAddress(json.results[0].formatted_address);
-    })
-    .catch(error => console.warn(error));
+  componentDidMount() {
+    const { navigation } = this.props;
+    const location = navigation.getParam('location');
 
-  const handleImage = response => {
-    // console.log('Response = ', response);
+    Geocoder.from({
+      lat: location.latitude,
+      lng: location.longitude,
+    }).then(json => {
+      this.setAddress(json.results[0].formatted_address);
+    });
+  }
+
+  setImage = source => this.setState({ image: source });
+
+  handleChangeTitle = text => this.setState({ title: text });
+
+  setAddress = address => this.setState({ address });
+
+  handleChangeDescription = text => this.setState({ description: text });
+
+  handleImage = response => {
     if (response.didCancel) {
-      console.log('User cancelled image picker');
+      this.setState({ message: 'User cancelled image picker' });
     } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error);
+      this.setState({
+        message: `ImagePicker Error: ${response.error}`,
+      });
     } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
+      this.setState({
+        message: `User tapped custom button:,${response.customButton}`,
+      });
     } else {
       const source = { uri: response.uri };
-
-      // You can also display the image using data:
-      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-      setImage(source);
+      this.setImage(source);
     }
   };
 
-  const createNote = () => {
+  createNote = () => {
+    const { title, description, image, address } = this.state;
+    const { dispatch, navigation } = this.props;
     dispatch(
       addNote({
         address,
@@ -61,50 +77,54 @@ const NoteDetailScreen = ({ navigation, dispatch }) => {
     navigation.navigate('Statistic');
   };
 
-  return (
-    <DismissKeyboard>
-      <Card style={{ flex: 1 }}>
-        <Card.Content>
-          <Title>Add more detail for the note</Title>
-          <TextInput
-            mode="outlined"
-            label="Title"
-            value={title}
-            onChangeText={text => setTitle(text)}
-          />
-          <Spacing />
+  render() {
+    const { title, description, image, address } = this.state;
+    return (
+      <DismissKeyboard>
+        <Card style={{ flex: 1 }}>
+          <Card.Content>
+            <Title>Add more detail for the note</Title>
+            <TextInput
+              mode="outlined"
+              label="Title"
+              value={title}
+              onChangeText={this.handleChangeTitle}
+            />
+            <Spacing />
 
-          <TextInput
-            mode="outlined"
-            label="Description"
-            multiline
-            value={description}
-            onChangeText={text => setDescription(text)}
-          />
-          <Spacing />
-          <Text>
-            <Subheading style={{ fontWeight: 'bold' }}>Address</Subheading>:{' '}
-            {address}
-          </Text>
-          <Spacing />
-          <Button
-            icon="camera"
-            mode="contained"
-            onPress={() => ImagePicker.showImagePicker({}, handleImage)}>
-            Open Image Library
-          </Button>
-          <Spacing />
+            <TextInput
+              mode="outlined"
+              label="Description"
+              multiline
+              value={description}
+              onChangeText={this.handleChangeDescription}
+            />
+            <Spacing />
+            <Text>
+              <Subheading style={{ fontWeight: 'bold' }}>Address</Subheading>:{' '}
+              {address}
+            </Text>
+            <Spacing />
+            <Button
+              // icon="camera"
+              data-test="button-upload"
+              mode="contained"
+              onPress={() => ImagePicker.showImagePicker({}, this.handleImage)}>
+              Open Image Library
+            </Button>
+            <Spacing />
 
-          <Card.Cover source={image} />
-          <Spacing gap={20} />
+            <Card.Cover source={image} />
+            <Spacing gap={20} />
 
-          <Button icon="note" mode="contained" onPress={() => createNote()}>
-            Create New Note
-          </Button>
-        </Card.Content>
-      </Card>
-    </DismissKeyboard>
-  );
-};
+            <Button icon="note" mode="contained" onPress={this.createNote}>
+              Create New Note
+            </Button>
+          </Card.Content>
+        </Card>
+      </DismissKeyboard>
+    );
+  }
+}
 
 export default connect()(NoteDetailScreen);

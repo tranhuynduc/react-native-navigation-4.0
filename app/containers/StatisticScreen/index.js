@@ -10,7 +10,8 @@ export const StatisticScreen = ({ notes, navigation }) => {
         <Card.Content>
           <Title>There are no note</Title>
           <Button
-            icon="add"
+            data-test="button-create-new"
+            icon="plus"
             mode="contained"
             onPress={() => navigation.push('Create')}>
             Create new note?
@@ -35,6 +36,7 @@ export const StatisticScreen = ({ notes, navigation }) => {
         </Card.Content>
         <Card.Actions>
           <Button
+            data-test="button-view-detail"
             onPress={() => navigation.push('NoteItem', { note: latestNote })}>
             View Detail
           </Button>

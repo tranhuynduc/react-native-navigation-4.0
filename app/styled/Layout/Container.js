@@ -6,12 +6,6 @@ const Container = styled(View)`
   padding: 15px;
   margin-right: auto;
   margin-left: auto;
-
-  ${({ gap }) =>
-    gap &&
-    `
-    paddingVertical: ${gap}px
- `}
 `;
 
 export default Container;

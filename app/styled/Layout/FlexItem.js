@@ -4,12 +4,6 @@ import { View } from 'react-native';
 const FlexItem = styled(View)`
   flex: 1;
 
-  ${({ flex }) =>
-    flex &&
-    `
-    flex: ${flex}
- `}
-
   ${({ background }) =>
     background &&
     `
