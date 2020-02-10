@@ -23,11 +23,13 @@ const Header = ({ scene, previous, navigation }) => {
 
   return (
     <Appbar>
-      {!options.noMenu && (
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+      {previous ? (
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+      ) : (
+        !options.noMenu && (
+          <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+        )
       )}
-
-      {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content title={title} />
     </Appbar>
   );
