@@ -7,10 +7,8 @@ import ListScreen from '../containers/ListScreen';
 import LoginScreen from '../containers/LoginScreen';
 import StatisticScreen from '../containers/StatisticScreen';
 import NoteDetailScreen from '../containers/NoteDetailScreen';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import { Appbar, Title, Colors, Drawer } from 'react-native-paper';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { DrawerItems } from 'react-navigation-drawer';
+import { Appbar, Drawer } from 'react-native-paper';
+import { SafeAreaView } from 'react-native';
 import NoteItem from '../components/NoteItem';
 const Header = ({ scene, previous, navigation }) => {
   const { options } = scene.descriptor;
@@ -22,16 +20,21 @@ const Header = ({ scene, previous, navigation }) => {
       : scene.route.routeName;
 
   return (
-    <Appbar>
-      {previous ? (
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-      ) : (
-        !options.noMenu && (
-          <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-        )
-      )}
-      <Appbar.Content title={title} />
-    </Appbar>
+    <SafeAreaView>
+      <Appbar>
+        {previous ? (
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+        ) : (
+          !options.noMenu && (
+            <Appbar.Action
+              icon="menu"
+              onPress={() => navigation.openDrawer()}
+            />
+          )
+        )}
+        <Appbar.Content title={title} />
+      </Appbar>
+    </SafeAreaView>
   );
 };
 
